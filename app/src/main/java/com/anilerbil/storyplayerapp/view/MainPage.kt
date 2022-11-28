@@ -1,4 +1,4 @@
-package com.anilerbil.storyplayerapp.ui
+package com.anilerbil.storyplayerapp.view
 
 
 import android.os.Bundle
@@ -8,11 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anilerbil.storyplayerapp.ViewModel.MainPageViewModel
 import com.anilerbil.storyplayerapp.R
 import com.anilerbil.storyplayerapp.adapter.StoryPlayerGroupRecyclerAdapter
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_page.*
 
 
@@ -36,19 +36,22 @@ class MainPage : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(MainPageViewModel::class.java)
-        recyclerViewStoryGroupList.layoutManager = LinearLayoutManager(context)
+        viewModel = ViewModelProviders.of(this).get(MainPageViewModel::class.java)
+        //viewModel = ViewModelProvider(this).get(MainPageViewModel::class.java)
+        viewModel.getDatafromInt()
+
+        recyclerViewStoryGroupList.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         recyclerViewStoryGroupList.adapter = recyclerStoryAdapter
 
         observeLiveData()
 
     }
 
-    fun observeLiveData() {
+    private fun observeLiveData() {
         viewModel.storyGroup.observe(viewLifecycleOwner, Observer { storyGroup ->
             storyGroup?.let {
                 recyclerViewStoryGroupList.visibility = View.VISIBLE
-                recyclerStoryAdapter.storylistupdate(storyGroup)
+                recyclerStoryAdapter.storyListUpdate(storyGroup)
             }
         })
 
@@ -60,7 +63,6 @@ class MainPage : Fragment() {
                     mainPageTextView.visibility = View.GONE
                 }
             }
-
         })
 
         viewModel.isDataLoad.observe(viewLifecycleOwner, Observer { loading ->
@@ -73,10 +75,7 @@ class MainPage : Fragment() {
                     mainPageProgressBar.visibility = View.GONE
                 }
             }
-
         })
-
     }
-
 }
 

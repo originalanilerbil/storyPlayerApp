@@ -1,8 +1,11 @@
 package com.anilerbil.storyplayerapp.ViewModel
 
+import android.content.Intent
+import android.view.LayoutInflater
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.anilerbil.storyplayerapp.StoryGroup
+import com.anilerbil.storyplayerapp.services.StoryPlayerAPI
 import com.anilerbil.storyplayerapp.services.StoryPlayerAPIService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -19,11 +22,7 @@ class MainPageViewModel: ViewModel() {
     private val disposable = CompositeDisposable()
 
 
-    //fun updateData() {
-
-    //}
-
-    private fun getDatafromInt() {
+    fun getDatafromInt() {
         isDataLoad.value = true
         disposable.add(
             storyplayerApiService.getData()
@@ -41,20 +40,12 @@ class MainPageViewModel: ViewModel() {
                         errorMessage.value = true
                         e.printStackTrace()
                     }
-
                 }
-
                 )
-
         )
-
-
-
     }
-
     override fun onCleared() {
         super.onCleared()
         disposable.clear()
     }
-
 }

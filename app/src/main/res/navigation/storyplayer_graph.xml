@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/story_detail_page"
-        android:name="com.anilerbil.storyplayerapp.ui.StoryDetailPage"
+        android:name="com.anilerbil.storyplayerapp.view.StoryDetailPage"
         android:label="story_detail_page">
         <action
             android:id="@+id/action_story_detail_page_to_mainpage"
@@ -21,13 +21,22 @@
         <argument
             android:name="userpp"
             app:argType="string" />
+        <argument
+            android:name="storyTime"
+            app:argType="string" />
+        <argument
+            android:name="url"
+            app:argType="string" />
+        <argument
+            android:name="type"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/mainPage"
-        android:name="com.anilerbil.storyplayerapp.ui.MainPage"
+        android:name="com.anilerbil.storyplayerapp.view.MainPage"
         android:label="main_page">
         <action
-            android:id="@+id/action_mainpage_to_storyy_detail_page"
+            android:id="@+id/action_mainPage_to_story_detail_page"
             app:destination="@id/story_detail_page" />
     </fragment>
 </navigation>

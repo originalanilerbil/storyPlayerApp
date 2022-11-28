@@ -26,7 +26,7 @@ data class Story(
     val url: String,
 
     @SerializedName("content_type")
-    val type: String,
+    val type: Int,
 
     @SerializedName("user_pp")
     val userPp: String

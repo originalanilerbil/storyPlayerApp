@@ -6,13 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.anilerbil.storyplayerapp.*
-import com.anilerbil.storyplayerapp.ui.MainPageDirections
+import com.anilerbil.storyplayerapp.R
+import com.anilerbil.storyplayerapp.StoryGroup
+import com.anilerbil.storyplayerapp.view.MainPageDirections
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.storyplayer_group_recycler_row.view.*
+import kotlinx.android.synthetic.main.storyplayer_group_recycler_row.view.mainPagepPpText
+import kotlinx.android.synthetic.main.storyplayer_group_recycler_row.view.mainPagePp
 
 class StoryPlayerGroupRecyclerAdapter(
-    val storygrouplist: ArrayList<StoryGroup>,
+    val storyGroupList: ArrayList<StoryGroup>,
     val context: Context
 ): RecyclerView.Adapter<StoryPlayerGroupRecyclerAdapter.StoryViewHolder>() {
     class StoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -20,7 +22,7 @@ class StoryPlayerGroupRecyclerAdapter(
     }
 
     override fun getItemCount(): Int {
-        return storygrouplist.size
+        return storyGroupList.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryViewHolder {
@@ -30,20 +32,25 @@ class StoryPlayerGroupRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
-        val item = storygrouplist.get(position).data.get(position).storyGroup.get(position)
+        val item = storyGroupList.get(position).data.get(position).storyGroup.get(position)
         holder.itemView.mainPagepPpText.text= item.username
         Glide.with(context).load(item.userPp).into(holder.itemView.mainPagePp)
 
         holder.itemView.setOnClickListener {
-            val action = MainPageDirections.actionMainpageToStoryyDetailPage(item.storyId,item.username,item.userPp)
+            val action = MainPageDirections.actionMainPageToStoryDetailPage(
+                item.storyId,
+                item.username,
+                item.userPp,
+                item.storyTime,
+                item.url,
+                item.type)
             Navigation.findNavController(it).navigate(action)
         }
-
     }
 
-    fun storylistupdate(newStoryList: List<StoryGroup>){
-        storygrouplist.clear()
-        storygrouplist.addAll(newStoryList)
+    fun storyListUpdate(newStoryList: List<StoryGroup>){
+        storyGroupList.clear()
+        storyGroupList.addAll(newStoryList)
         notifyDataSetChanged()
     }
 }
